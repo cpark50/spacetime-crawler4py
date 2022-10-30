@@ -4,9 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 
 # This function runs in linear time because it checks every character in a file
-def tokenize(url) -> list:
-    response = requests.get(url)
-    html = response.text
+def tokenize(html) -> list:
+
     bs = BeautifulSoup(html, 'html.parser')
     tokens = [] 
     raw_content = bs.find_all("p")
@@ -55,6 +54,24 @@ def isAlphaNumeric(text) -> bool:
         return True
     return False
 
+def count_tokens(tokens: dict) -> int:
+    total = 0
+    for token in tokens:
+        total += tokens[token]
+    return total
+
+
+def write_to_log(url: string) -> string:
+    response = requests.get(url)
+    if response.status_code >= 200 and response.status_code <=399:
+        html = response.text
+        tokens = computeWordFrequencies(tokenize(html))
+        msg = ""
+        msg += "Total number of tokens: " + str(count_tokens(tokens))
+        return msg
+    else: 
+        return 
+
 
 # def main():
 #     try:
@@ -68,16 +85,3 @@ def isAlphaNumeric(text) -> bool:
 # if __name__ == "__main__":
 #     main()
 
-def count_tokens(tokens: dict) -> int:
-    total = 0
-    for token in tokens:
-        total += tokens[token]
-    return total
-
-
-def write_to_log(url: string) -> string:
-    tokens = computeWordFrequencies(tokenize(url))
-
-    msg = ""
-    msg += "Total number of tokens: " + str(count_tokens(tokens))
-    return msg
