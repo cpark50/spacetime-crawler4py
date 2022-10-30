@@ -29,7 +29,7 @@ class Worker(Thread):
             self.logger.info(
                 f"Downloaded {tbd_url}, status <{resp.status}>, "
                 f"using cache {self.config.cache_server}.")
-            self.token_logger.info(write_to_log(resp)) # Ha: write report information to logger
+            self.token_logger.info(write_to_log(tbd_url)) # Ha: write report information to logger
             scraped_urls = scraper.scraper(tbd_url, resp)
             for scraped_url in scraped_urls:
                 self.frontier.add_url(scraped_url)

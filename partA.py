@@ -1,11 +1,18 @@
 import string
 import re
-
+import requests
+from bs4 import BeautifulSoup
 
 # This function runs in linear time because it checks every character in a file
-def tokenize(resp) -> list:
-    tokens = []
-    file = resp.raw_response.content
+def tokenize(url) -> list:
+    response = requests.get(url)
+    html = response.text
+    bs = BeautifulSoup(html, 'html.parser')
+    tokens = [] 
+    raw_content = bs.find_all("p")
+    file = []
+    for content in raw_content:
+        file.append(content.get_text())
     for line in file:
         line = line.lower()
         token = ""
