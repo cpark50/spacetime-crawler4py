@@ -1,4 +1,5 @@
 import re
+from wordCount import write_to_log 
 from urllib.parse import urlparse, urldefrag, urljoin
 from bs4 import BeautifulSoup
 from string import punctuation
@@ -52,6 +53,8 @@ def extract_next_links(url, resp):
                     if is_valid(lk):
                         fixed, throwaway = urldefrag(lk)
                         return_urls.append(fixed)
+                        
+                write_to_log(soup.get_text(), resp.url)
                 """page_txt = soup.get_text()
                 page_txt = re.sub(r'\d+', '', page_txt) # remove numbers
                 tok_txt = page_txt.split() # get each token string, to be trimmed of punctuation

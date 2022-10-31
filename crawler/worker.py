@@ -2,7 +2,7 @@ from threading import Thread
 
 from inspect import getsource
 
-from partA import write_to_log
+# from partA import write_to_log
 from utils.download import download
 from utils import get_logger
 import scraper
@@ -12,7 +12,7 @@ import time
 class Worker(Thread):
     def __init__(self, worker_id, config, frontier):
         self.logger = get_logger(f"Worker-{worker_id}", "Worker")
-        self.token_logger = get_logger("Tokens") # Ha: add a separate logger to log report metrics
+        # self.token_logger = get_logger("Tokens") # Ha: add a separate logger to log report metrics
         self.config = config
         self.frontier = frontier
         # basic check for requests in scraper
@@ -29,7 +29,7 @@ class Worker(Thread):
             self.logger.info(
                 f"Downloaded {tbd_url}, status <{resp.status}>, "
                 f"using cache {self.config.cache_server}.")
-            self.token_logger.info(write_to_log(tbd_url)) # Ha: write report information to logger
+            # self.token_logger.info(write_to_log(tbd_url)) # Ha: write report information to logger
             scraped_urls = scraper.scraper(tbd_url, resp)
             for scraped_url in scraped_urls:
                 self.frontier.add_url(scraped_url)
