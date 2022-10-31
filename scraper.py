@@ -44,6 +44,7 @@ def extract_next_links(url, resp):
             if resp.raw_response != None: # returns no data
                 # need to make sure each url is valid before adding it to the list
                 soup = BeautifulSoup(resp.raw_response.content,"lxml-xml")
+                tok_soup = BeautifulSoup(resp.raw_response.content, 'html.parser')
                 # get all urls
                 for link in soup.find_all('a'):
                     if not bool(urlparse(link.get('href')).netloc):
@@ -54,7 +55,7 @@ def extract_next_links(url, resp):
                         fixed, throwaway = urldefrag(lk)
                         return_urls.append(fixed)
                         
-                write_to_log(soup.get_text(), resp.url)
+                write_to_log(tok_soup.get_text(), resp.url)
                 """page_txt = soup.get_text()
                 page_txt = re.sub(r'\d+', '', page_txt) # remove numbers
                 tok_txt = page_txt.split() # get each token string, to be trimmed of punctuation
