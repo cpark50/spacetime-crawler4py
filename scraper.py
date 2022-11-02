@@ -56,26 +56,6 @@ def extract_next_links(url, resp):
                         return_urls.append(fixed)
                         
                 write_to_log(tok_soup.get_text(), resp.url)
-                """page_txt = soup.get_text()
-                page_txt = re.sub(r'\d+', '', page_txt) # remove numbers
-                tok_txt = page_txt.split() # get each token string, to be trimmed of punctuation
-                
-                num_words = 0
-                for token in tok_txt:\\
-                    low_word = token.lower()
-                    low_word.strip(punctuation) # get rid of the punctuation surrounding the word
-                    for char in token: # if any part of it is a number, skip
-                        if char.isdigit():
-                            continue
-                    elif low_word not in stopwords: # add to dict if not a stop word
-                        num_words += 1
-                        if low_word not in word_count:
-                            word_count[low_word] = 1
-                        else:
-                            word_count[low_word] += 1
-                if num_words > longest_page_count:
-                    longest_page_count = num_words
-                    longest_page = resp.url"""
                 return return_urls
                         
             else:

@@ -25,15 +25,16 @@ stopwords = set(["a","about","above","after","again","against","all","am","an","
 
 # This function runs in linear time because it checks every character in a file
 def tokenize(raw_content) -> list:
-    page_txt = re.sub(r'\d+', '', raw_content)
-    tok_txt = page_txt.split() # get each token string, to be trimmed of punctuation
-    num_words = 0
+    content = re.sub(r'\d+', '', raw_content) #remove digit
+    content = re.sub(r'[^\w\s]', '', content) #remove punctuations
+    content = content.lower()
+    tokened = content.split() # get each token string, to be trimmed of punctuation
     tokens = []
-    for token in tok_txt:
-        low_word = token.lower()
+    for token in tokened:
+        token = token.lower()
         if len(token) > 1:
             if token not in stopwords:
-                if isAlphaNumeric(token):
+                if isalnum(token):
                     tokens.append(token)
     return tokens
 
@@ -64,11 +65,11 @@ def printTokens(tokenFrequencies: dict):
         print(token[0], token[1])
 
 
-# This function is linear time because it will check if the entire input matches regex pattern
-def isAlphaNumeric(text) -> bool:
-    if re.match("^[a-z0-9]+$", text):
-        return True
-    return False
+# # This function is linear time because it will check if the entire input matches regex pattern
+# def isAlphaNumeric(text) -> bool:
+#     if re.match("^[a-z0-9]+$", text):
+#         return True
+#     return False
 
 def count_tokens(tokens: dict) -> int:
     total = 0
